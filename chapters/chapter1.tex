@@ -1,0 +1,33 @@
+\part{机器学习和深度学习基础}
+\chapter{基本概念}
+\section{激活函数}
+
+\subsection{Sigmoid 函数}
+\label{subsec:Sigmoid}
+
+Sigmoid 函数及其导数的形式为：
+\begin{align}
+  \label{equ:sigmoid}
+  \sigma(x) & = \frac{1}{1 + e^{-x}} \\
+  \label{equ:sigmoid-d}
+  \sigma'(x) & = \sigma(x) (1-\sigma(x))
+\end{align}
+
+% \begin{figure}[ht]
+%   \centering
+%   \includegraphics[width=0.8\textwidth]{images/机器学习和深度学习基础/基本概念/Sigmoid.png}
+%   \caption{Sigmoid 函数及其导数的图像}
+%   \label{fig:sigmoid}
+% \end{figure}
+
+\begin{itemize}
+  \item 图~\ref{fig:sigmoid}~中蓝色曲线为 sigmoid 函数，其形状与字母 S 类似，可以
+    将 $-\infty$ 到 $\infty$ 的输入单调映射到 0 到 1 之间。
+  \item 图~\ref{fig:sigmoid}~中红色曲线为 sigmoid 函数的导数，在输入值较大或较小时，
+    该值趋于 0，因此 sigmoid 函数作为激活函数时，可能出现梯度消失，网络无法正常训
+    练。
+\end{itemize}
+
+%%% Local Variables:
+%%% TeX-master: "../master"
+%%% End:

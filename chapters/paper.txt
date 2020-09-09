@@ -1,0 +1,38 @@
+一、推荐系统架构
+[1, Youtube] Covington P, Adams J, Sargin E. Deep neural networks for youtube recommendations. Proceedings of Proceedings of the 10th ACM conference on recommender systems. ACM, 2016. 191–198.
+
+二、非预估类算法（可用于召回）
+基于内容的推荐算法
+[2] Lops P, De Gemmis M, Semeraro G. Content-based recommender systems: State of the art and trends. Proceedings of Recommender systems handbook. Springer, 2011: 73–105. 16
+
+基于协同过滤的推荐算法
+[3, neiborhood-based] Desrosiers C, Karypis G. A comprehensive survey of neighborhood-based recom- mendation methods. Proceedings of Recommender systems handbook. Springer, 2011: 107–144.
+[4, matrix-factorization-based] Koren Y, Bell R. Advances in collaborative filtering. Proceedings of Recommender systems handbook. Springer, 2015: 77–118.
+
+Embedding相关
+
+
+深度学习模型：
+[5, DSSM] Learning deep structured semantic models for web search using clickthrough data. Proceedings of Proceedings of the 22nd ACM international conference on Information & Knowledge Management. ACM, 2013. 2333–2338.
+文献[1]也包含深度学习召回模型
+
+三、预估类算法（可用于召回或排序）
+LR方法：基础的LR不说了，下面是一些相关的拓展
+[6, Facebook, GBDT+LR] He X, Pan J, Jin O, et al. Practical lessons from predicting clicks on ads at facebook. Proceedings of Proceedings of the Eighth International Workshop on Data Mining for Online Advertising. ACM, 2014. 1–9.
+[7, Google, FTRL] McMahan H B, Holt G, Sculley D, et al. Ad click prediction: a view from the trenches. Proceedings of Proceedings of the 19th ACM SIGKDD international conference on Knowledge discovery and data mining. ACM, 2013. 1222–1230.
+[8, 自动特征选择，前沿paper，不一定实用] Yuanfei L, Mengshuo W, Hao Z, et al. AutoCross: Automatic Feature Crossing for Tabular Data in Real-World Applications. arXiv preprint arXiv:1904.12857, 2019.
+
+FM方法：
+[9, FM] Rendle S. Factorization machines. Proceedings of 2010 IEEE International Con- ference on Data Mining. IEEE, 2010. 995–1000.
+[10, FFM] Juan Y, Zhuang Y, Chin W S, et al. Field-aware factorization machines for CTR prediction. Proceedings of Proceedings of the 10th ACM Conference on Recom- mender Systems. ACM, 2016. 43–50.
+
+深度学习方法
+[11, Google, wide & deep] Cheng H T, Koc L, Harmsen J, et al. Wide & deep learning for recommender systems. Proceedings of Proceedings of the 1st workshop on deep learning for recommender systems. ACM, 2016. 7–10.
+[12, DeepFM] Guo H,Tang R,Ye Y, et al. DeepFM: a factorization-machine based neural network for CTR prediction. arXiv preprint arXiv:1703.04247, 2017.
+[13, DCN] Wang R, Fu B, Fu G, et al. Deep & cross network for ad click predictions. Pro- ceedingsofProceedingsoftheADKDD’17.ACM,2017. 12.17
+[14, xDeepFM] Lian J, Zhou X, Zhang F, et al. xdeepfm: Combining explicit and implicit fea- ture interactions for recommender systems. Proceedings of Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining. ACM, 2018. 1754–1763.
+[15, NFM] He X, Chua T S. Neural factorization machines for sparse predictive analytics. Proceedings of Proceedings of the 40th International ACM SIGIR conference on Research and Development in Information Retrieval. ACM, 2017. 355–364.
+[16, DLRM] Naumov M, Mudigere D, Shi H J M, et al. Deep Learning Recommendation Model for Personalization and Recommendation Systems. arXiv preprint arXiv:1906.00091, 2019
+
+三、重排序算法
+[17, DPP] Chen L, Zhang G, Zhou E. Fast greedy map inference for determinantal point process to improve recommendation diversity. Proceedings of Advances in Neural Information Processing Systems, 2018. 5622–5633.
