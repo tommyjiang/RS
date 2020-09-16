@@ -1,31 +1,24 @@
-\part{机器学习和深度学习基础}
-\chapter{基本概念}
-\section{激活函数}
+\chapter{经典论文}
+\section{YouTube DNN}
 
-\subsection{Sigmoid 函数}
-\label{subsec:Sigmoid}
+文献 \citerb{2016-Youtube-DNN} 介绍了 DNN 在 YouTube 视频推荐上的应用。
 
-Sigmoid 函数及其导数的形式为：
-\begin{align}
-  \label{equ:sigmoid}
-  \sigma(x) & = \frac{1}{1 + e^{-x}} \\
-  \label{equ:sigmoid-d}
-  \sigma'(x) & = \sigma(x) (1-\sigma(x))
-\end{align}
+\subsection{YouTube DNN 推荐模型结构}
+YouTube DNN 推荐模型的整体结构如图~\ref{fig:youtube-dnn-structure}~所示，包括召
+回和排序两级模型：
 
-% \begin{figure}[ht]
-%   \centering
-%   \includegraphics[width=0.8\textwidth]{images/机器学习和深度学习基础/基本概念/Sigmoid.png}
-%   \caption{Sigmoid 函数及其导数的图像}
-%   \label{fig:sigmoid}
-% \end{figure}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.8\textwidth]{images/YouTube/YouTube-DNN-推荐模型结构.pdf}
+  \caption{YouTube DNN 推荐模型结构}
+  \label{fig:youtube-dnn-structure}
+\end{figure}
 
 \begin{itemize}
-  \item 图~\ref{fig:sigmoid}~中蓝色曲线为 sigmoid 函数，其形状与字母 S 类似，可以
-    将 $-\infty$ 到 $\infty$ 的输入单调映射到 0 到 1 之间。
-  \item 图~\ref{fig:sigmoid}~中红色曲线为 sigmoid 函数的导数，在输入值较大或较小时，
-    该值趋于 0，因此 sigmoid 函数作为激活函数时，可能出现梯度消失，网络无法正常训
-    练。
+  \item 召回模型：召回模型主要利用用户的历史信息，从视频库中的几百万视频中挑出几
+    百个用户感兴趣的视频。
+  \item 排序模型：排序模型综合利用用户的历史信息和视频特征，将召回模型的输出和其他
+    视频来源视频进行排序，输出十个左右的最终候选视频。
 \end{itemize}
 
 %%% Local Variables:
