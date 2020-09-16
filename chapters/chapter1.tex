@@ -3,7 +3,7 @@
 
 文献 \citerb{2016-Youtube-DNN} 介绍了 DNN 在 YouTube 视频推荐上的应用。
 
-\subsection{YouTube DNN 推荐模型结构}
+\subsection{推荐模型整体结构}
 YouTube DNN 推荐模型的整体结构如图~\ref{fig:youtube-dnn-structure}~所示，包括召
 回和排序两级模型：
 
@@ -17,9 +17,18 @@ YouTube DNN 推荐模型的整体结构如图~\ref{fig:youtube-dnn-structure}~�
 \begin{itemize}
   \item 召回模型：召回模型主要利用用户的历史信息，从视频库中的几百万视频中挑出几
     百个用户感兴趣的视频。
-  \item 排序模型：排序模型综合利用用户的历史信息和视频特征，将召回模型的输出和其他
-    视频来源视频进行排序，输出十个左右的最终候选视频。
+  \item 排序模型：排序模型综合利用用户的历史信息和视频特征，将召回模型的输出和其
+    他来源的视频进行排序，最终输出十个左右的候选视频。
 \end{itemize}
+
+\subsection{召回模型结构}
+召回模型将挑出用户感兴趣的视频建模成一个多分类问题：
+
+\begin{equation}
+  P(w_t=i|U, C) = \frac{e^{v_i u}}{\sum_{j \in V} e^{v_j u}}
+\end{equation}
+
+\subsection{排序模型结构}
 
 %%% Local Variables:
 %%% TeX-master: "../master"
