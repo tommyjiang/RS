@@ -85,7 +85,9 @@ YouTube DNN 推荐模型的整体结构如图~\ref{fig:youtube-dnn-structure}~�
   \item 视频展示频率：降低已展示未点击视频的出现频率
 \end{itemize}
 
-\paragraph{训练和部署}
+\paragraph{训练和部署} 排序模型的数学形式为带权重的逻辑回归，其中正样本为用户点击
+展示的视频，其权重为观看时长；负样本为用户未点击展示的视频，其权重为 1。部署时，
+使用 $e^{x}$，其中 $x$ 为逻辑回归模型的输出，$e^x$ 为每个视频的用户期望观看时长。
 
 %%% Local Variables:
 %%% TeX-master: "../master"
