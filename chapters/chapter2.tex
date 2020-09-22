@@ -1,0 +1,43 @@
+\chapter{Embedding}
+\section{Airbnb Embedding}
+
+\subsection{Listing Embedding}
+\paragraph{模型输入输出} 输入为若干个用户点击序列 $s=(l_1,\ldots,l_M) \in \mathcal{S}$，输出为每个
+listing 的 $d$维 embedding 向量，使相似 listing 的向量尽可能。
+
+\paragraph{损失函数}
+\begin{equation}
+  \mathcal{L} = \sum_{s \in \mathcal{S}} \sum_{l_i \in s} \sum_{-m \leq j \leq m, i \neq 0} \mathrm{log} \mathrm{P}(l_{i+j}|l_i)
+\end{equation}
+
+其中
+\begin{equation}
+  \mathrm{P}(l_{i+j}|l_i) = \frac{\mathrm{exp} v_{l_i}^{\mathrm{T}} v_{l'_{i+j}}}{\sum_{l=1}^{|V|}\mathrm{exp}(v_{l_i}^{\mathrm{T}} v'_l)}
+\end{equation}
+
+\paragraph{训练} 由于 listings 数量较大，无法同时对所有样本进行训练，因此采用负
+采样的方法，即随机选择一些不在该 listing 附近的样本作为负样本，将损失函数改为如
+下形式：
+
+\begin{equation}
+  \mathrm{argmax}_{\theta} \sum_{(l, c) \in \mathcal{D}_{p}} \mathrm{log} \frac{1}{1 + e^{-v'_c v_l}} + \sum_{(l, c) \in \mathcal{D}_{n}} \mathrm{log} \frac{1}{1 + e^{v'_c v_l}}
+\end{equation}
+
+\begin{itemize}
+  \item 改进 1：加入 booking listing 作为 global context。正样本中加入最终的
+    booking listing。
+    \begin{equation}
+      \mathrm{argmax}_{\theta} \sum_{(l, c) \in \mathcal{D}_{p}} \mathrm{log} \frac{1}{1 + e^{-v'_c v_l}} + \sum_{(l, c) \in \mathcal{D}_{n}} \mathrm{log} \frac{1}{1 + e^{v'_c v_l}} + {\color{red}{\mathrm{log} \frac{1}{1 + e^{-v'_{l_b}v_l}}}}
+    \end{equation}
+  \item 改进 2：加入与 central listing 属于同一个地区的针对性负样本。
+    \begin{equation}
+    \begin{split}
+      \mathrm{argmax}_{\theta} \sum_{(l, c) \in \mathcal{D}_{p}} \mathrm{log} \frac{1}{1 + e^{-v'_c v_l}} + \sum_{(l, c) \in \mathcal{D}_{n}} \mathrm{log} \frac{1}{1 + e^{v'_c v_l}} + \\ {\mathrm{log} \frac{1}{1 + e^{-v'_{l_b}v_l}}} + {\color{red}{\sum_{(l, m_n) \in \mathcal{D}_{m_n}} \mathrm{log} \frac{1}{1 + e^{v'_{m_n} v_l}}}}
+    \end{split}
+  \end{equation}
+\end{itemize} 
+
+
+%%% Local Variables:
+%%% TeX-master: "../master"
+%%% End:
