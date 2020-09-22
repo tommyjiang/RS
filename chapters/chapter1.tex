@@ -47,7 +47,7 @@ YouTube DNN 推荐模型的整体结构如图~\ref{fig:youtube-dnn-structure}~�
   \item 用户搜索历史：处理方法与用户观看历史类似。
   \item 用户个人信息：包括用户地理信息和设备的 embedding 以及归一化的用户性别、年
     龄、登录状态等。
-  \item example age：\color{red}{待补充}
+  \item example age：模型预测时刻距离训练样本产生的时间。
 \end{itemize}
 \paragraph{正负样本} 用户完整看完一个视频作为正样本。训练样本包含所有观看记录，包
 括其他网站嵌入的 YouTube 视频。每个用户都生成相等数量的训练样本，以降低高活跃用户
