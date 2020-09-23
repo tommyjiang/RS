@@ -1,7 +1,7 @@
 \chapter{Embedding}
 \section{Airbnb Embedding}
 
-\subsection{Listing Embedding}
+\subsection{Listing embedding}
 \paragraph{模型输入输出} 输入为若干个用户点击序列 $s=(l_1,\ldots,l_M) \in \mathcal{S}$，输出为每个
 listing 的 $d$维 embedding 向量，使相似 listing 的向量尽可能。
 
@@ -37,6 +37,24 @@ listing 的 $d$维 embedding 向量，使相似 listing 的向量尽可能。
   \end{equation}
 \end{itemize} 
 
+\subsection{Listing type and user type embedding}
+Listing embedding 主要关注用户短期兴趣，为了考虑用户长期兴趣，需要加入 user
+embedding。由于 booking 信息的稀疏性，不再学习 listing id 和 user
+id 的 embedding，而是改为学习 listing type 和 user type 的 embedding。
+
+\paragraph{模型输入输出} 输入为若干同一个用户的预订序
+列 $s=(u_{type_1}l_{type_1}, \ldots, u_{type_M}l_{type_M}) \, \in \mathcal{S}$，输出为
+每个 listing type 和 user type 的 embedding。序列中的 user type 和 listing type
+根据预订时的情况计算，同一个 user 或 listing 在不同时间对应的 type 可能不同。
+
+\paragraph{损失函数} 与 listing embedding 的损失基本相同，区别是需要分别更新
+listing type embedding 和 user type embedding，同时不需要对同一地区的其他
+listing 做负采样。考虑到房主的偏好，将拒绝入住的负样本也加入损失函数。
+
+\subsection{排序模型}
+Embedding 结合用户短期兴趣和长期兴趣可以召回相似的房源，所有召回房源的排序通过
+GBDT 模型实现。
+\paragraph{模型输入输出}
 
 %%% Local Variables:
 %%% TeX-master: "../master"
