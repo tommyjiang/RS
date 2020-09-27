@@ -1,9 +1,10 @@
 \chapter{Embedding}
 \section{Airbnb Embedding}
+Airbnb 将 embedding 技术分别用在召回和排序模型\citerb{2018-Airbnb-embedding}。
 
 \subsection{Listing embedding}
 \paragraph{模型输入输出} 输入为若干个用户点击序列 $s=(l_1,\ldots,l_M) \in \mathcal{S}$，输出为每个
-listing 的 $d$维 embedding 向量，使相似 listing 的向量尽可能。
+listing 的 $d$ 维 embedding 向量，使相似 listing 的向量的距离尽可能小。
 
 \paragraph{损失函数}
 \begin{equation}
@@ -54,7 +55,22 @@ listing 做负采样。考虑到房主的偏好，将拒绝入住的负样本也
 \subsection{排序模型}
 Embedding 结合用户短期兴趣和长期兴趣可以召回相似的房源，所有召回房源的排序通过
 GBDT 模型实现。
-\paragraph{模型输入输出}
+
+\paragraph{模型输入输出} 输入为用户搜索序列 $D_s = (x_i, y_i), i=1 \ldots K$，其
+中 $y_i$ 由 listing 最终的预订、点击、拒绝等状态确定。$x_i$ 包括 listing feature，
+user feature，query feature 和 cross feature，以及 embedding feature。
+
+\paragraph{Embedding 计算 feature} 以用户点击的 listing 为例。先按照 market 将
+listing 分组，计算出不同 market 的平均 listing，再计算当前 listing 与所有 market
+平均 listing 的最大相似度(余弦距离)。
+
+\section{Taobao Embedding}
+阿里利用 graph embedding 技术生成淘宝的所有物品的 embedding，并以此作为召回的依
+据。
+
+\paragraph{构造物品关系图}
+利用用户行为构造物品关系图，物品作为节点，同一用户连续浏览两个物品的行为转化为将
+两个物品之间的有向边的权重加 1。
 
 %%% Local Variables:
 %%% TeX-master: "../master"
