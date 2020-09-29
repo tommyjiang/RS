@@ -68,10 +68,31 @@ listing 分组，计算出不同 market 的平均 listing，再计算当前 list
 阿里利用 graph embedding 技术生成淘宝的所有物品的 embedding，并以此作为召回的依
 据。
 
+\subsection{基础图 embedding 方法（BGE）}
+
 \paragraph{构造物品关系图}
 利用用户行为构造物品关系图，物品作为节点，将同一用户连续浏览两个物品的行为转化为
 两个物品之间的有向边的权重加 1。实际使用时将刷单用户和误点击的数据清除，同时去掉
 商家频繁更新的物品，因为这些商品有可能变为完全不同的商品。
+
+\paragraph{生成物品序列}
+利用 DeepWalk 生成物品序列，选择图中的一个节点 $v_i$，则下一个节点的转移概率为
+
+\begin{equation}
+  P(v_j | v_i) = \frac{M_{ij}}{\sum_{j \in N_{+}(v_i)} M_{ij}}, \, v_j \in N_{+}(v_i)
+\end{equation}
+
+其中 $v_j$ 是 $v_i$ 的相邻节点，$M_{ij}$ 是 $v_i$ 和 $v_j$ 边的权重。得到物品序
+列后可以用 Skip-Gram 进行训练。
+
+\subsection{加入物品信息的图 embedding 方法（GES）}
+BGE 方法的一个问题是无法解决物品的冷启动问题，因为无法得到新加入的物品的
+embedding。GES 利用了物品的 meta 信息，例如类别、店铺、价格等，对于有 $n$ 个
+meta 信息的物品，学习 $n+1$ 个 embedding $\mathbf{W}_v^0, \ldots,
+\mathbf{W}_v^n$，将其取平均后作为物品的 embedding。
+
+\subsection{增强型物品信息图 embedding 方法（EGES）}
+
 
 %%% Local Variables:
 %%% TeX-master: "../master"
