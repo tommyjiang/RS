@@ -10,15 +10,14 @@ YouTube DNN 推荐模型的整体结构如图~\ref{fig:youtube-dnn-structure}~�
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.8\textwidth]{images/YouTube/YouTube-DNN-推荐模型结构.pdf}
-  \caption{YouTube DNN 推荐模型结构}
-  \label{fig:youtube-dnn-structure}
+  \caption{YouTube DNN 推荐模型结构}\label{fig:youtube-dnn-structure}
 \end{figure}
 
 \begin{itemize}
-  \item 召回模型：召回模型主要利用用户的历史信息，从视频库中的几百万视频中挑出几
-    百个用户感兴趣的视频。
-  \item 排序模型：排序模型综合利用用户的历史信息和视频特征，将召回模型的输出和其
-    他来源的视频进行排序，最终输出十个左右的候选视频。
+  \item 召回模型：主要利用用户的历史信息，从视频库中的几百万视频中挑出几百个用户感
+    兴趣的视频。
+  \item 排序模型：综合利用用户的历史信息和视频特征，将召回模型的输出和其他来源的
+    视频进行排序，最终输出十个左右的候选视频。
 \end{itemize}
 
 \subsection{召回模型结构}
@@ -28,17 +27,13 @@ YouTube DNN 推荐模型的整体结构如图~\ref{fig:youtube-dnn-structure}~�
   P(w_t=i|U, C) = \frac{e^{v_i u}}{\sum_{j \in V} e^{v_j u}}
 \end{equation}
 
-其中 $u$ 和 $v$ 分别为用户和视频的 embedding。模型结构如图~\ref{fig:youtube-dnn-retrieval-structure}~所示：
+其中 $u$ 和 $v$ 分别为用户及其历史行为和视频的 embedding。模型结构如图~\ref{fig:youtube-dnn-retrieval-structure}~所示：
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.8\textwidth]{images/YouTube/YouTube-DNN-召回模型结构.pdf}
-  \caption{YouTube DNN 召回模型结构}
-  \label{fig:youtube-dnn-retrieval-structure}
+  \caption{YouTube DNN 召回模型结构}\label{fig:youtube-dnn-retrieval-structure}
 \end{figure}
-
-召回模型的目标是学习如何将用户的观看历史、搜索历史和个人信息映射为用户 embedding，
-以区分不同用户感兴趣的视频。
 
 \paragraph{模型输入 feature}
 \begin{itemize}
@@ -53,19 +48,20 @@ YouTube DNN 推荐模型的整体结构如图~\ref{fig:youtube-dnn-structure}~�
 括其他网站嵌入的 YouTube 视频。每个用户都生成相等数量的训练样本，以降低高活跃用户
 的影响。
 \paragraph{训练} 由于 softmax 的类别非常多（视频库中的视频数），训练时采用负类采
-样 + 重要性加权的方式进行加速，不再同时计算所有类别的 loss。
-\paragraph{部署} 部署时由于有时延要求，使用近似最近邻方法找到 top N 个视频。
-\paragraph{评测} 模型使用的训练样本包括 $t$ 时间前的样本，预测 $t$ 时刻的观看，
-避免随机留一法导致的信息泄露。
+样 + 重要性加权的方式进行加速，不同时计算所有类别的 loss。
+\paragraph{部署} 部署时不需要计算 softmax，在内积空间使用近似最近邻方法寻找 top
+N 的视频。
+\paragraph{评测} 模型使用的训练样本只包括 $t$ 时间前的样本，预测 $t$ 时刻的召回
+样本，以避免随机留一法导致的信息泄露。
 
 \subsection{排序模型结构}
-排序模型的目标是根据用户的期望观看时长对视频排序，其模型结构如图~\ref{fig:youtube-dnn-structure}~所示：
+排序模型的目标是根据用户的期望观看时长对视频排序，其模型结构如
+图~\ref{fig:youtube-dnn-structure}~所示：
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.8\textwidth]{images/YouTube/YouTube-DNN-排序模型结构.pdf}
-  \caption{YouTube DNN 排序模型结构}
-  \label{fig:youtube-dnn-ranking-structure}
+  \caption{YouTube DNN 排序模型结构}\label{fig:youtube-dnn-ranking-structure}
 \end{figure}
 
 \paragraph{模型输入 feature}

@@ -8,12 +8,12 @@ listing 的 $d$ 维 embedding 向量，使相似 listing 的向量的距离尽�
 
 \paragraph{损失函数}
 \begin{equation}
-  \mathcal{L} = \sum_{s \in \mathcal{S}} \sum_{l_i \in s} \sum_{-m \leq j \leq m, i \neq 0} \mathrm{log} \mathrm{P}(l_{i+j}|l_i)
+  \mathcal{L} = \sum_{s \in \mathcal{S}} \sum_{l_i \in s} \sum_{-m \leq j \leq m, i \neq 0} \log \mathrm{P}(l_{i+j}|l_i)
 \end{equation}
 
 其中
 \begin{equation}
-  \mathrm{P}(l_{i+j}|l_i) = \frac{\mathrm{exp} v_{l_i}^{\mathrm{T}} v_{l'_{i+j}}}{\sum_{l=1}^{|V|}\mathrm{exp}(v_{l_i}^{\mathrm{T}} v'_l)}
+  \mathrm{P}(l_{i+j}|l_i) = \frac{\exp v_{l_i}^{\mathrm{T}} v_{l'_{i+j}}}{\sum_{l=1}^{|V|}\exp(v_{l_i}^{\mathrm{T}} v'_l)}
 \end{equation}
 
 \paragraph{训练} 由于 listings 数量较大，无法同时对所有样本进行训练，因此采用负
@@ -21,22 +21,22 @@ listing 的 $d$ 维 embedding 向量，使相似 listing 的向量的距离尽�
 下形式：
 
 \begin{equation}
-  \mathrm{argmax}_{\theta} \sum_{(l, c) \in \mathcal{D}_{p}} \mathrm{log} \frac{1}{1 + e^{-v'_c v_l}} + \sum_{(l, c) \in \mathcal{D}_{n}} \mathrm{log} \frac{1}{1 + e^{v'_c v_l}}
+  \mathrm{argmax}_{\theta} \sum_{(l, c) \in \mathcal{D}_{p}} \log \frac{1}{1 + e^{-v'_c v_l}} + \sum_{(l, c) \in \mathcal{D}_{n}} \log \frac{1}{1 + e^{v'_c v_l}}
 \end{equation}
 
 \begin{itemize}
   \item 改进 1：加入 booking listing 作为 global context。正样本中加入最终的
     booking listing。
     \begin{equation}
-      \mathrm{argmax}_{\theta} \sum_{(l, c) \in \mathcal{D}_{p}} \mathrm{log} \frac{1}{1 + e^{-v'_c v_l}} + \sum_{(l, c) \in \mathcal{D}_{n}} \mathrm{log} \frac{1}{1 + e^{v'_c v_l}} + {\color{red}{\mathrm{log} \frac{1}{1 + e^{-v'_{l_b}v_l}}}}
+      \mathrm{argmax}_{\theta} \sum_{(l, c) \in \mathcal{D}_{p}} \log \frac{1}{1 + e^{-v'_c v_l}} + \sum_{(l, c) \in \mathcal{D}_{n}} \log \frac{1}{1 + e^{v'_c v_l}} + {\color{red}{\log \frac{1}{1 + e^{-v'_{l_b}v_l}}}}
     \end{equation}
   \item 改进 2：加入与 central listing 属于同一个地区的针对性负样本。
     \begin{equation}
     \begin{split}
-      \mathrm{argmax}_{\theta} \sum_{(l, c) \in \mathcal{D}_{p}} \mathrm{log} \frac{1}{1 + e^{-v'_c v_l}} + \sum_{(l, c) \in \mathcal{D}_{n}} \mathrm{log} \frac{1}{1 + e^{v'_c v_l}} + \\ {\mathrm{log} \frac{1}{1 + e^{-v'_{l_b}v_l}}} + {\color{red}{\sum_{(l, m_n) \in \mathcal{D}_{m_n}} \mathrm{log} \frac{1}{1 + e^{v'_{m_n} v_l}}}}
+      \mathrm{argmax}_{\theta} \sum_{(l, c) \in \mathcal{D}_{p}} \log \frac{1}{1 + e^{-v'_c v_l}} + \sum_{(l, c) \in \mathcal{D}_{n}} \log \frac{1}{1 + e^{v'_c v_l}} + \\ {\log \frac{1}{1 + e^{-v'_{l_b}v_l}}} + {\color{red}{\sum_{(l, m_n) \in \mathcal{D}_{m_n}} \log \frac{1}{1 + e^{v'_{m_n} v_l}}}}
     \end{split}
   \end{equation}
-\end{itemize} 
+\end{itemize}
 
 \subsection{Listing type and user type embedding}
 Listing embedding 主要关注用户短期兴趣，为了考虑用户长期兴趣，需要加入 user
@@ -62,7 +62,7 @@ user feature，query feature 和 cross feature，以及 embedding feature。
 
 \paragraph{Embedding 计算 feature} 以用户点击的 listing 为例。先按照 market 将
 listing 分组，计算出不同 market 的平均 listing，再计算当前 listing 与所有 market
-平均 listing 的最大相似度(余弦距离)。
+平均 listing 的最大相似度 (余弦距离)。
 
 \section{Taobao Embedding}
 阿里利用 graph embedding 技术生成淘宝的所有物品的 embedding，并以此作为召回的依
